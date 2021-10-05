@@ -1,2 +1,3 @@
-# echo-npcs-regolith
+# Echo:NPC Regolith
+
 Echo:NPC filter for Regolith
