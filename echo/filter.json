@@ -1,0 +1,9 @@
+{
+    "filters": [
+        {
+            "runWith": "python",
+            "script": "./echo_npc.py",
+            "name": "Compiling Echo:NPC entities!"
+        }
+    ]
+}
