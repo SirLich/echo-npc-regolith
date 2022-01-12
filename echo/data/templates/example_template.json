@@ -1,0 +1,16 @@
+{
+    "header": {
+        "default_state": "main"
+    },
+    "states": [
+        {
+            "name": "main",
+            "text": [
+                "Hey there!",
+                "Welcome to Echo:NPC!",
+                "I hope you are enjoying the tool."
+            ]
+        }
+    ],
+    "entity": "default echo:example"
+}

@@ -1,0 +1,574 @@
+{
+    "default_state": "none",
+    "default_transitions": [
+        "interact"
+    ],
+    "sound_template": "/playsound SOUND @a ~ ~ ~",
+    "text_template": "/say TEXT",
+    "output_type": "here",
+    "default_state_type": "standard",
+    "user_account": "",
+    "subpath": "",
+    "entity_subpath": "",
+    "animation_controller_subpath": "",
+    "entity_name_format": "NAME.entity.json",
+    "animation_controller_name_format": "NAME.animation_controller.json",
+    "manifest_id": "ERROR: You should set this value in your entity header.",
+    "create_entities": [],
+    "max_allowed_states": 20,
+    "command_templates": {
+        "despawn": "@s echo:despawn",
+        "despawn_teleport": "/teleport @s ~ ~-1000 ~",
+        "playsound": "/playsound $1 @a",
+        "goto": "@s echo:$1"
+    },
+    "entity_templates": {
+        "default": {
+            "format_version": "1.14.0",
+            "minecraft:entity": {
+                "description": {
+                    "identifier": "$1",
+                    "is_spawnable": true,
+                    "is_summonable": true,
+                    "is_experimental": false
+                },
+                "components": {
+                    "minecraft:collision_box": {
+                        "width": 1,
+                        "height": 2
+                    },
+                    "minecraft:push_through": {
+                        "value": 1
+                    },
+                    "minecraft:health": {
+                        "value": 5,
+                        "max": 5
+                    },
+                    "minecraft:physics": {},
+                    "minecraft:nameable": {}
+                },
+                "component_groups": {},
+                "events": {}
+            }
+        },
+        "invulnerable": {
+            "format_version": "1.16.0",
+            "minecraft:entity": {
+                "description": {
+                    "identifier": "$1",
+                    "is_spawnable": true,
+                    "is_summonable": true,
+                    "is_experimental": false
+                },
+                "components": {
+                    "minecraft:damage_sensor": {
+                        "triggers": {
+                            "on_damage": {
+                                "filters": {}
+                            },
+                            "deals_damage": false
+                        }
+                    },
+                    "minecraft:type_family": {
+                        "family": [
+                            "$2{echo}"
+                        ]
+                    },
+                    "minecraft:scale": {
+                        "value": "$3{1}"
+                    },
+                    "minecraft:collision_box": {
+                        "width": 1,
+                        "height": 2
+                    },
+                    "minecraft:push_through": {
+                        "value": 1
+                    },
+                    "minecraft:health": {
+                        "value": 5,
+                        "max": 5
+                    },
+                    "minecraft:physics": {},
+                    "minecraft:nameable": {}
+                },
+                "component_groups": {},
+                "events": {}
+            }
+        },
+        "dummy": {
+            "format_version": "1.16.0",
+            "minecraft:entity": {
+                "description": {
+                    "identifier": "$1",
+                    "is_spawnable": true,
+                    "is_summonable": true,
+                    "is_experimental": false
+                },
+                "components": {
+                    "minecraft:scale": {
+                        "value": "$2{1}"
+                    },
+                    "minecraft:collision_box": {
+                        "width": 1,
+                        "height": 2
+                    },
+                    "minecraft:push_through": {
+                        "value": 1
+                    },
+                    "minecraft:health": {
+                        "value": 5,
+                        "max": 5
+                    },
+                    "minecraft:nameable": {}
+                },
+                "component_groups": {},
+                "events": {}
+            }
+        },
+        "target": {
+            "format_version": "1.14.0",
+            "minecraft:entity": {
+                "description": {
+                    "identifier": "echo:$1",
+                    "is_spawnable": true,
+                    "is_summonable": true,
+                    "is_experimental": false
+                },
+                "components": {
+                    "minecraft:type_family": {
+                        "family": [
+                            "$1"
+                        ]
+                    },
+                    "minecraft:damage_sensor": {
+                        "triggers": {
+                            "on_damage": {
+                                "filters": {}
+                            },
+                            "deals_damage": false
+                        }
+                    },
+                    "minecraft:collision_box": {
+                        "width": 1,
+                        "height": 2
+                    },
+                    "minecraft:push_through": {
+                        "value": 1
+                    },
+                    "minecraft:health": {
+                        "value": 5,
+                        "max": 5
+                    },
+                    "minecraft:physics": {},
+                    "minecraft:nameable": {}
+                },
+                "component_groups": {},
+                "events": {}
+            }
+        }
+    },
+    "component_templates": {
+        "add_rider": {
+            "minecraft:addrider": {
+                "entity_type": "$1",
+                "spawn_event": "$2{minecraft:entity_spawned}"
+            }
+        },
+        "remove_if_not_riding": {
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "is_riding",
+                                    "operator": "!="
+                                }
+                            ]
+                        },
+                        "event": "echo:despawn"
+                    }
+                ]
+            }
+        },
+        "scale": {
+            "minecraft:scale": {
+                "value": "$1"
+            }
+        },
+        "variant": {
+            "minecraft:variant": {
+                "value": "$1{0}"
+            }
+        },
+        "mark_variant": {
+            "minecraft:mark_variant": {
+                "value": "$1{0}"
+            }
+        },
+        "block_damage_from_tag": {
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "on_damage": {
+                        "filters": {
+                            "test": "has_tag",
+                            "subject": "player",
+                            "value": "$1"
+                        }
+                    },
+                    "deals_damage": false
+                }
+            }
+        },
+        "random_wander": {
+            "minecraft:movement.basic": {},
+            "minecraft:jump.static": {},
+            "minecraft:navigation.walk": {
+                "can_float": true,
+                "avoid_water": true,
+                "avoid_damage_blocks": true
+            },
+            "minecraft:movement": {
+                "value": 0.2
+            },
+            "minecraft:behavior.look_at_player": {
+                "priority": 9
+            },
+            "minecraft:behavior.random_look_around": {
+                "priority": 8
+            },
+            "minecraft:behavior.random_stroll": {
+                "priority": 6,
+                "speed_multiplier": 0.7
+            },
+            "minecraft:behavior.flee_sun": {
+                "priority": 2,
+                "speed_multiplier": 1
+            }
+        },
+        "pathfinding": {
+            "minecraft:movement": {
+                "value": "$2{0.3}"
+            },
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 0,
+                "scan_interval": 20,
+                "reselect_targets": true,
+                "target_search_height": 1000,
+                "within_radius": 1000,
+                "must_see": false,
+                "entity_types": [
+                    {
+                        "filters": [
+                            {
+                                "test": "is_family",
+                                "subject": "other",
+                                "value": "$1{player}"
+                            }
+                        ],
+                        "max_dist": 1000
+                    }
+                ]
+            },
+            "minecraft:attack": {
+                "damage": 0
+            },
+            "minecraft:behavior.ranged_attack": {
+                "priority": 0,
+                "attack_radius": "$3{3}"
+            },
+            "minecraft:movement.basic": {},
+            "minecraft:follow_range": {
+                "value": 1000,
+                "max": 1000
+            },
+            "minecraft:navigation.generic": {
+                "can_path_over_water": true,
+                "avoid_water": true,
+                "can_pass_doors": true,
+                "can_walk": true,
+                "avoid_damage_blocks": true,
+                "can_open_doors": true
+            },
+            "minecraft:jump.static": {}
+        }
+    },
+    "transition_templates": {
+        "hit_by_player": {
+            "minecraft:damage_sensor": {
+                "triggers": {
+                    "on_damage": {
+                        "filters": {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "player"
+                        },
+                        "event": "$2{next_event}"
+                    },
+                    "deals_damage": "$1{true}"
+                }
+            }
+        },
+        "pathfinding": {
+            "minecraft:entity_sensor": {
+                "sensor_range": "$4{4}",
+                "event_filters": {
+                    "all_of": [
+                        {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "$1{player}"
+                        }
+                    ]
+                },
+                "event": "$5{next_event}"
+            },
+            "minecraft:movement": {
+                "value": "$2{0.3}"
+            },
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 0,
+                "reselect_targets": true,
+                "target_search_height": 1000,
+                "within_radius": 1000,
+                "scan_interval": 20,
+                "must_see": false,
+                "entity_types": [
+                    {
+                        "filters": [
+                            {
+                                "test": "is_family",
+                                "subject": "other",
+                                "value": "$1{player}"
+                            }
+                        ],
+                        "max_dist": 1000
+                    }
+                ]
+            },
+            "minecraft:attack": {
+                "damage": 0
+            },
+            "minecraft:behavior.ranged_attack": {
+                "priority": 0,
+                "attack_radius": "$3{1}"
+            },
+            "minecraft:movement.basic": {},
+            "minecraft:follow_range": {
+                "value": 1000,
+                "max": 1000
+            },
+            "minecraft:navigation.generic": {
+                "can_path_over_water": true,
+                "avoid_water": true,
+                "can_pass_doors": true,
+                "can_walk": true,
+                "avoid_damage_blocks": true,
+                "can_open_doors": true
+            },
+            "minecraft:jump.static": {}
+        },
+        "near_mob": {
+            "minecraft:entity_sensor": {
+                "sensor_range": "$2{2}",
+                "event_filters": {
+                    "all_of": [
+                        {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "$1"
+                        }
+                    ]
+                },
+                "event": "$3{next_event}"
+            }
+        },
+        "has_tag": {
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "has_tag",
+                                    "value": "$1"
+                                }
+                            ]
+                        },
+                        "event": "$2{next_event}"
+                    }
+                ]
+            }
+        },
+        "reverse_proximity": {
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "distance_to_nearest_player",
+                                    "operator": ">",
+                                    "value": "$1"
+                                }
+                            ]
+                        },
+                        "event": "$2{next_event}"
+                    }
+                ]
+            }
+        },
+        "protected_reverse_proximity": {
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "distance_to_nearest_player",
+                                    "operator": ">",
+                                    "value": "$1"
+                                },
+                                {
+                                    "test": "has_tag",
+                                    "value": "echo:active"
+                                }
+                            ]
+                        },
+                        "event": "$2{next_event}"
+                    }
+                ]
+            }
+        },
+        "proximity_ignore_tag": {
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "has_tag",
+                                    "value": "$2",
+                                    "operator": "not"
+                                },
+                                {
+                                    "test": "distance_to_nearest_player",
+                                    "operator": "<",
+                                    "value": "$1"
+                                }
+                            ]
+                        },
+                        "event": "$3{next_event}"
+                    }
+                ]
+            }
+        },
+        "proximity": {
+            "minecraft:environment_sensor": {
+                "triggers": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                {
+                                    "test": "distance_to_nearest_player",
+                                    "operator": "<",
+                                    "value": "$1"
+                                }
+                            ]
+                        },
+                        "event": "$2{next_event}"
+                    }
+                ]
+            }
+        },
+        "protected_proximity": {
+            "minecraft:entity_sensor": {
+                "sensor_range": "$1",
+                "minimum_count": 1,
+                "event_filters": {
+                    "all_of": [
+                        {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "player"
+                        },
+                        {
+                            "none_of": {
+                                "test": "has_tag",
+                                "subject": "other",
+                                "value": "dev"
+                            }
+                        }
+                    ]
+                },
+                "event": "$2{next_event}"
+            }
+        },
+        "timer": {
+            "minecraft:timer": {
+                "looping": false,
+                "time": "$1",
+                "time_down_event": {
+                    "event": "$2{next_event}"
+                }
+            }
+        },
+        "interact_with_item": {
+            "minecraft:interact": {
+                "interactions": [
+                    {
+                        "on_interact": {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "has_equipment",
+                                        "domain": "hand",
+                                        "subject": "other",
+                                        "value": "$1",
+                                        "operator": "="
+                                    }
+                                ]
+                            },
+                            "interact_text": "$2{Click to Talk}",
+                            "play_sounds": "$3{}",
+                            "event": "$2{next_event}"
+                        }
+                    }
+                ]
+            }
+        },
+        "interact": {
+            "minecraft:interact": {
+                "interactions": [
+                    {
+                        "on_interact": {
+                            "filters": {
+                                "all_of": [
+                                    {
+                                        "test": "is_family",
+                                        "subject": "other",
+                                        "value": "player"
+                                    },
+                                    {
+                                        "test": "has_equipment",
+                                        "domain": "hand",
+                                        "subject": "other",
+                                        "value": "name_tag",
+                                        "operator": "!="
+                                    }
+                                ]
+                            },
+                            "interact_text": "$2{Click to Talk}",
+                            "event": "$1{next_event}"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}
