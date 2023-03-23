@@ -13,14 +13,20 @@ Regolith is an Addon Compiler for the Bedrock Edition of Minecraft, and is the u
 
 ## How to use this filter:
 
-Add this code to the `filters` list of the `config.json` file in Regolith project:
+If you get stuck, visit the Regolith website for more information. The general idea is:
+ - `regolith init` (if you don't have a project yet)
+ - `regolith install`
+ - Add the `filter` into a profile of your choosing (see `config.json`)
+
+The filter definition looks like this
 
 ```json
 {
-	"url": "github.com/SirLich/echo-npc-regolith/echo"
+	"filter": "echo"
 }
 ```
 
+When installing, some default data will be placed into `data/echo`. After installing, you can edit these files yourself :)
 ## Folder Structure
 
 This filter expects and uses these paths:
@@ -29,10 +35,10 @@ In general, the path `data/echo` is used to store all configurations for Echo. S
 
 ```
 packs
-└── data
-	└── echo
-		├── settings
-		│   └── settings.json
-		└── templates
-			└── example_template.json
+└─ data
+   └─ echo
+      ├─ settings
+      │   └─ settings.json
+      └─ templates
+          └─ example_template.json
 ```
