@@ -1,4 +1,5 @@
 {
+    "description": "An old-fashioned automation tool for generating state-driven NPCs.",
     "filters": [
         {
             "runWith": "python",
